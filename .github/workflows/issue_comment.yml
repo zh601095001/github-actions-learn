@@ -1,4 +1,6 @@
 name: Create a comment on new issues
+permissions:
+  issues: write
 
 on:
   issues:
