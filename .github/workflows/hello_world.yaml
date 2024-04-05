@@ -3,11 +3,11 @@ name: hello world workflow
 on:
   push:
     branches:
-      - main
+      - master
 
   pull_request:
     branches:
-      - main
+      - master
 
   # 添加一个按钮主动触发
   workflow_dispatch:
