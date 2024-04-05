@@ -29,7 +29,6 @@ jobs:
     steps:
       - name: Create comment with API
         run: |
-          run: |
           API_URL="https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
           DATA=$(jq -n --arg body "Thank you for submitting an issue. Our team will review it and get back to you soon." '{"body": $body}')
           curl -s -X POST $API_URL -d "$DATA" -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json"
