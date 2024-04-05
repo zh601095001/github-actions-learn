@@ -27,6 +27,7 @@ jobs:
   comment-with-api:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Create comment with API
         run: |
           gh issue comment ${{ github.event.issue.number }} --body "Hi from GitHub CLI"
