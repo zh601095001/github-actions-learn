@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Create comment with API
         run: |
+          gh auth setup-git
+          gh auth login --with-token < $GITHUB_TOKEN
           gh issue comment ${{ github.event.issue.number }} --body "Thank you for your issue!"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
