@@ -27,11 +27,19 @@ jobs:
   comment-with-api:
     runs-on: ubuntu-latest
     steps:
+      - name: Install GitHub CLI
+        run: |
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt update
+          sudo apt install gh
       - name: Create comment with API
         run: |
-          API_URL="https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
-          DATA=$(jq -n --arg body "Thank you for submitting an issue. Our team will review it and get back to you soon." '{"body": $body}')
-          curl -s -X POST $API_URL -d "$DATA" -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json"
+          gh api -X POST \
+            http://api.github.com/repo/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
+            -f body='
+            Comment but from the API call not action
+            '
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORGANIZATION: ${{ github.event.organisation.login }}
